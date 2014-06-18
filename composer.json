@@ -1,0 +1,16 @@
+{
+	"name": "mu-bundle/chat",
+	"type": "library",
+	"description": "Bundle for Mu Labs framework",
+	"keywords": [],
+	"authors": [
+		{
+			"name": "Romain Schiano",
+			"email": "rschiano@mulabs.fr",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0"
+	}
+}
