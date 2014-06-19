@@ -35,7 +35,7 @@ class Chat extends Bundle\Users\Controller\Connected
         $view = $this->getView();
         $messages = $this->getApp()->getChatMessageManager()->getMessagesLimitById($lastId);
 
-        $view->setVar('messages', $messages);
+        $view->setVar('messages', array_reverse($messages));
         return $view->fetch('backoffice/common/chatMessageList');
     }
 
