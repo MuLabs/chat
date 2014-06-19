@@ -139,9 +139,9 @@ class ChatMessage extends Kernel\Model\Manager
 
         $handler = $this->getApp()->getDatabase()->getHandler('writeFront');
 
-        $sql = 'INSERT INTO @ (:idSender, :content, :dateInsert) VALUES (?, ?, NOW())';
+        $sql = 'INSERT INTO @ (:idSender, :content, :dateInsert) VALUES (?, ?, ?)';
 
-        $query = new Kernel\Db\Query($sql, array($idSender, $content), $this);
+        $query = new Kernel\Db\Query($sql, array($idSender, $content, date('Y-m-d H:i:s')), $this);
         $handler->sendQuery($query);
         $idMessage = $handler->getInsertId();
         $message = $this->get($idMessage);
