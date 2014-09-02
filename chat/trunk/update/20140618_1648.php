@@ -5,9 +5,8 @@
  * Date: 26/06/14
  * Time: 15:25
  */
-
 $sql = "
-CREATE TABLE `chatMessage` (
+CREATE TABLE IF NOT EXISTS `chatMessage` (
   `idChatMessage` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idSender` smallint(5) unsigned NOT NULL,
   `content` text NOT NULL,
