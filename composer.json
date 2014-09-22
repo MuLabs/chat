@@ -12,6 +12,6 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-        "mu-bundle/users": "dev-master"
+        "mu-bundle/users": "dev-trunk"
 	}
 }
