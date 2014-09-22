@@ -87,7 +87,7 @@ class ChatMessage extends Kernel\Model\Entity
 
     #region Getters specific
     /**
-     * @return Bundle\Glices\Model\Entity\User
+     * @return Bundle\Users\Model\Entity\User
      */
     public function getSender()
     {
