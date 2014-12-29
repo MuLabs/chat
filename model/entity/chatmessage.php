@@ -57,12 +57,21 @@ class ChatMessage extends Kernel\Model\Entity
     }
 
     /**
+     * @internal
      * @param int $idSender
      */
     public function setIdSender($idSender)
     {
         $this->idSender = (int)$idSender;
         $this->setProperty('idSender', $this->idSender);
+    }
+
+    /**
+     * @param Kernel\Model\Entity $sender
+     */
+    public function setSender(Kernel\Model\Entity $sender)
+    {
+        $this->setIdSender($sender->getId());
     }
 
     /**
