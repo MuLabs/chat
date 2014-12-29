@@ -120,8 +120,8 @@ class ChatMessage extends Kernel\Model\Manager
     public function create(array $parameters = array())
     {
         $invalid = array();
-        if (empty($parameters['idSender'])) {
-            $invalid[] = 'idSender';
+        if (empty($parameters['sender']) && !($parameters['sender'] instanceof Kernel\Model\Entity)) {
+            $invalid[] = 'sender';
         }
         if (empty($parameters['content'])) {
             $invalid[] = 'content';
@@ -134,14 +134,19 @@ class ChatMessage extends Kernel\Model\Manager
             ), Kernel\Model\Exception::INVALID_CREATE_PARAMETERS);
         }
 
-        $idSender = $parameters['idSender'];
+        /** @var Kernel\Model\Entity $sender */
+        $sender  = $parameters['sender'];
         $content = $parameters['content'];
 
         $handler = $this->getApp()->getDatabase()->getHandler('writeFront');
 
         $sql = 'INSERT INTO @ (:idSender, :content, :dateInsert) VALUES (?, ?, ?)';
 
-        $query = new Kernel\Db\Query($sql, array($idSender, $content, date('Y-m-d H:i:s')), $this);
+        $query = new Kernel\Db\Query($sql, array(
+            $sender->getId(),
+            $content,
+            date('Y-m-d H:i:s')
+        ), $this);
         $handler->sendQuery($query);
         $idMessage = $handler->getInsertId();
         $message = $this->get($idMessage);

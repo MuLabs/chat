@@ -51,7 +51,7 @@ class Chat extends Bundle\Users\Controller\Connected
         $this->getApp()->getChatMessageManager()->create(
             array(
                 'content' => $content,
-                'idSender' => $viewer->getId(),
+                'sender' => $viewer,
             )
         );
 
