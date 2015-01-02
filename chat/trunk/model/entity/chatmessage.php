@@ -124,7 +124,7 @@ class ChatMessage extends Kernel\Model\Entity
     public function jsonSerialize()
     {
         return array(
-            'idChatMessage' => $this->getId(),
+            'id' => $this->getId(),
             'idSender' => $this->getIdSender(),
             'content' => $this->getContent(),
             'dateInsert' => $this->getDateInsert(),

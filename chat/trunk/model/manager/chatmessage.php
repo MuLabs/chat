@@ -13,15 +13,15 @@ class ChatMessage extends Kernel\Model\Manager
                 'db' => 'chatMessage'
             ),
             'keys' => array(
-                'pk_idChatMessage' => array(
+                'pk_id' => array(
                     'type' => 'primary',
                     'properties' => array(
-                        'idChatMessage',
+                        'id',
                     ),
                 ),
             ),
             'properties' => array(
-                'idChatMessage' => array(
+                'id' => array(
                     'title' => 'ID CM',
                     'form' => array(
                         'type' => 'hidden',
@@ -53,7 +53,7 @@ class ChatMessage extends Kernel\Model\Manager
                     'form' => array(
                         'type' => 'date',
                     ),
-                    'db' => 'date_insert',
+                    'db' => 'dateInsert',
                     'pdo_extra' => 'NOT NULL',
                     'type' => 'date',
                 ),
@@ -62,21 +62,13 @@ class ChatMessage extends Kernel\Model\Manager
                     'form' => array(
                         'type' => 'date',
                     ),
-                    'db' => 'date_edit',
+                    'db' => 'dateEdit',
                     'pdo_extra' => 'NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
                     'type' => 'timestamp',
                 )
             )
         ),
     );
-
-    /**
-     * @return string
-     */
-    public function getMainProperty()
-    {
-        return 'idChatMessage';
-    }
 
     /**
      * @param int[] $ids
@@ -86,27 +78,27 @@ class ChatMessage extends Kernel\Model\Manager
     {
         $where = implode(', ', array_fill(0, count($ids), '?'));
         $dbh = $this->getApp()->getDatabase()->getHandler('readFront');
-        $sql = 'SELECT :idChatMessage, :idSender, :content, :dateInsert, :dateEdit
+        $sql = 'SELECT :id, :idSender, :content, :dateInsert, :dateEdit
 				FROM @
-			WHERE :idChatMessage IN (' . $where . ')';
+			WHERE :id IN (' . $where . ')';
         $query = new Kernel\Db\Query($sql, $ids, $this);
 
         $result = $dbh->sendQuery($query);
         $entities = array();
-        while (list($idChatMessage, $idSender, $content, $dateInsert, $dateEdit) = $result->fetchRow()) {
+        while (list($id, $idSender, $content, $dateInsert, $dateEdit) = $result->fetchRow()) {
             /** @var Bundle\Chat\Model\Entity\chatMessage $entity */
-            $entity = $this->generateEntity($idChatMessage);
+            $entity = $this->generateEntity($id);
 
             if (!$entity) {
                 continue;
             }
 
-            $entity->setId($idChatMessage);
+            $entity->setId($id);
             $entity->setIdSender($idSender);
             $entity->setContent($content);
             $entity->setDateInsert($dateInsert);
             $entity->setDateEdit($dateEdit);
-            $entities[$idChatMessage] = $entity;
+            $entities[$id] = $entity;
         }
 
         return $entities;
@@ -168,9 +160,9 @@ class ChatMessage extends Kernel\Model\Manager
     public function getMessagesLimitByNumber($limit)
     {
         $handler = $this->getApp()->getDatabase()->getHandler('readFront');
-        $sql = 'SELECT :idChatMessage
+        $sql = 'SELECT :id
 				FROM @
-			ORDER BY :idChatMessage DESC
+			ORDER BY :id DESC
 			LIMIT ?';
         $query = new Kernel\Db\Query($sql, array($limit), $this);
         $result = $handler->sendQuery($query);
@@ -185,10 +177,10 @@ class ChatMessage extends Kernel\Model\Manager
     public function getMessagesLimitById($idLast)
     {
         $handler = $this->getApp()->getDatabase()->getHandler('readFront');
-        $sql = 'SELECT :idChatMessage
+        $sql = 'SELECT :id
 				FROM @
-				WHERE :idChatMessage > ?
-			ORDER BY :idChatMessage DESC';
+				WHERE :id > ?
+			ORDER BY :id DESC';
         $query = new Kernel\Db\Query($sql, array($idLast), $this);
         $result = $handler->sendQuery($query);
 
