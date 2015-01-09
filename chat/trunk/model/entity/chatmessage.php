@@ -91,7 +91,6 @@ class ChatMessage extends Kernel\Model\Entity
         $this->dateEdit = $dateEdit;
         $this->setProperty('dateEdit', $this->dateEdit);
     }
-
     #endregion
 
     #region Getters specific
@@ -116,7 +115,16 @@ class ChatMessage extends Kernel\Model\Entity
     #endregion
 
     #region Setters specific
-
+    /**
+     * @param Kernel\Model\Entity $user
+     */
+    public function updateLastIdChatMessageRead(Kernel\Model\Entity $user)
+    {
+        $handler = $this->getApp()->getDatabase()->getHandler('readFront');
+        $sql = 'REPLACE INTO @user (:user.idUser, :user.idChatMessage) VALUES (?, ?)';
+        $query = new Kernel\Db\Query($sql, array($user->getId(), $this->getId()), $this->getManager());
+        $handler->sendQuery($query);
+    }
     #endregion
     /**
      * @return array|string

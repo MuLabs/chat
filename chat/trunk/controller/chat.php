@@ -18,6 +18,9 @@ class Chat extends Bundle\Users\Controller\Connected
             case 'add':
                 return $this->actionAdd();
                 break;
+            case 'updateLastMessageRead':
+                return $this->updateLastMessageReadAction();
+                break;
             default:
                 $this->error('404');
                 break;
@@ -54,6 +57,21 @@ class Chat extends Bundle\Users\Controller\Connected
                 'sender' => $viewer,
             )
         );
+
+        return '';
+    }
+
+    public function updateLastMessageReadAction()
+    {
+        $idChatMessage  = $this->request('idChatMessage');
+        $viewer         = $this->getViewer();
+        $chatMessage    = $this->getApp()->getChatMessageManager()->get($idChatMessage);
+
+        if (!$chatMessage) {
+            $this->error('500');
+        }
+
+        $chatMessage->updateLastIdChatMessageRead($viewer);
 
         return '';
     }
