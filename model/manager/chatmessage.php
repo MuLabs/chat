@@ -221,8 +221,26 @@ class ChatMessage extends Kernel\Model\Manager
     }
 
     /**
+     * @param Kernel\Model\Entity $user
+     * @return Bundle\Chat\Model\Entity\ChatMessage
+     */
+    public function getLastChatMessageRead(Kernel\Model\Entity $user)
+    {
+        $handler = $this->getApp()->getDatabase()->getHandler('readFront');
+        $sql = 'SELECT :user.idChatMessage
+				FROM @user
+				WHERE :user.idUser = ?
+				LIMIT 1';
+        $query = new Kernel\Db\Query($sql, array($user->getId()), $this);
+        $result = $handler->sendQuery($query);
+        list($id) = $result->fetchRow();
+
+        return $this->get($id);
+    }
+
+    /**
      * @param mixed $id
-     * @return Bundle\Chat\Model\Entity\chatMessage
+     * @return Bundle\Chat\Model\Entity\ChatMessage
      */
     public function get($id)
     {
