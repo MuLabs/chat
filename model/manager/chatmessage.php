@@ -68,6 +68,39 @@ class ChatMessage extends Kernel\Model\Manager
                 )
             )
         ),
+        'user' => array(
+            'infos' => array(
+                'db' => 'chatMessageUser'
+            ),
+            'keys' => array(
+                'pk_idUser_idChatMessage' => array(
+                    'type' => 'primary',
+                    'properties' => array(
+                        'idUser',
+                    ),
+                ),
+            ),
+            'properties' => array(
+                'idUser' => array(
+                    'title' => 'ID Viewer',
+                    'form' => array(
+                        'type' => 'hidden',
+                    ),
+                    'db' => 'idUser',
+                    'pdo_extra' => 'UNSIGNED NOT NULL',
+                    'type' => 'int',
+                ),
+                'idChatMessage' => array(
+                    'title' => 'ID Last Chat Message read',
+                    'form' => array(
+                        'type' => 'hidden',
+                    ),
+                    'db' => 'idChatMessage',
+                    'pdo_extra' => 'UNSIGNED NOT NULL',
+                    'type' => 'int',
+                ),
+            )
+        ),
     );
 
     /**
@@ -162,8 +195,8 @@ class ChatMessage extends Kernel\Model\Manager
         $handler = $this->getApp()->getDatabase()->getHandler('readFront');
         $sql = 'SELECT :id
 				FROM @
-			ORDER BY :id DESC
-			LIMIT ?';
+                ORDER BY :id DESC
+                LIMIT ?';
         $query = new Kernel\Db\Query($sql, array($limit), $this);
         $result = $handler->sendQuery($query);
 
