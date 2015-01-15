@@ -235,7 +235,12 @@ class ChatMessage extends Kernel\Model\Manager
         $result = $handler->sendQuery($query);
         list($id) = $result->fetchRow();
 
-        return $this->get($id);
+        $lastMessage = $this->get($id);
+        if ( !$lastMessage ) {
+            $aLastMessage = $this->getMessagesLimitByNumber(1);
+            $lastMessage = reset($aLastMessage);
+        }
+        return $lastMessage;
     }
 
     /**
