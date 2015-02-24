@@ -26,45 +26,55 @@ class ChatMessage extends Kernel\Model\Manager
                     'form' => array(
                         'type' => 'hidden',
                     ),
-                    'db' => 'idChatMessage',
-                    'pdo_extra' => 'UNSIGNED NOT NULL AUTO_INCREMENT',
-                    'type' => 'int',
+                    'database' => array(
+                        'attribute' => 'idChatMessage',
+                        'pdo_extra' => 'UNSIGNED NOT NULL AUTO_INCREMENT',
+                        'type' => 'int',
+                    ),
                 ),
                 'idSender' => array(
                     'title' => 'ID sender',
                     'form' => array(
                         'type' => 'hidden',
                     ),
-                    'db' => 'idSender',
-                    'pdo_extra' => 'UNSIGNED NOT NULL',
-                    'type' => 'smallint',
+                    'database' => array(
+                        'attribute' => 'idSender',
+                        'pdo_extra' => 'UNSIGNED NOT NULL',
+                        'type' => 'smallint',
+                    ),
                 ),
                 'content' => array(
                     'title' => 'Content CM',
                     'form' => array(
                         'type' => 'textarea',
                     ),
-                    'db' => 'content',
-                    'pdo_extra' => 'NOT NULL',
-                    'type' => 'text'
+                    'database' => array(
+                        'attribute' => 'content',
+                        'pdo_extra' => 'NOT NULL',
+                        'type' => 'text'
+                    ),
                 ),
                 'dateInsert' => array(
                     'title' => 'Date de instertion',
                     'form' => array(
                         'type' => 'date',
                     ),
-                    'db' => 'dateInsert',
-                    'pdo_extra' => 'NOT NULL',
-                    'type' => 'date',
+                    'database' => array(
+                        'attribute' => 'dateInsert',
+                        'pdo_extra' => 'NOT NULL',
+                        'type' => 'date',
+                    ),
                 ),
                 'dateEdit' => array(
                     'title' => 'Date de édition',
                     'form' => array(
                         'type' => 'date',
                     ),
-                    'db' => 'dateEdit',
-                    'pdo_extra' => 'NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-                    'type' => 'timestamp',
+                    'database' => array(
+                        'attribute' => 'dateEdit',
+                        'pdo_extra' => 'NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+                        'type' => 'timestamp',
+                    ),
                 )
             )
         ),
@@ -86,18 +96,22 @@ class ChatMessage extends Kernel\Model\Manager
                     'form' => array(
                         'type' => 'hidden',
                     ),
-                    'db' => 'idUser',
-                    'pdo_extra' => 'UNSIGNED NOT NULL',
-                    'type' => 'int',
+                    'database' => array(
+                        'attribute' => 'idUser',
+                        'pdo_extra' => 'UNSIGNED NOT NULL',
+                        'type' => 'int',
+                    ),
                 ),
                 'idChatMessage' => array(
                     'title' => 'ID Last Chat Message read',
                     'form' => array(
                         'type' => 'hidden',
                     ),
-                    'db' => 'idChatMessage',
-                    'pdo_extra' => 'UNSIGNED NOT NULL',
-                    'type' => 'int',
+                    'database' => array(
+                        'attribute' => 'idChatMessage',
+                        'pdo_extra' => 'UNSIGNED NOT NULL',
+                        'type' => 'int',
+                    ),
                 ),
             )
         ),
